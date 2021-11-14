@@ -1,0 +1,116 @@
+From 6f77118951f22701c03a76e1968a3679c0079690 Mon Sep 17 00:00:00 2001
+From: dazong chen <sunnysimon1995@gmail.com>
+Date: Sun, 14 Nov 2021 10:40:24 -0700
+Subject: [PATCH] new dtsi file
+
+---
+ .../base_external/configs/aesd_qemu_defconfig |  3 +-
+ .../base_external/patches/linux/i2c.patch     | 44 +++++++++++++++++++
+ .../base_external/patches/linux/i2c1.patch    | 27 ------------
+ 3 files changed, 46 insertions(+), 28 deletions(-)
+ create mode 100644 final_buildroot/base_external/patches/linux/i2c.patch
+ delete mode 100644 final_buildroot/base_external/patches/linux/i2c1.patch
+
+diff --git a/final_buildroot/base_external/configs/aesd_qemu_defconfig b/final_buildroot/base_external/configs/aesd_qemu_defconfig
+index 28118f35..ab4270aa 100644
+--- a/final_buildroot/base_external/configs/aesd_qemu_defconfig
++++ b/final_buildroot/base_external/configs/aesd_qemu_defconfig
+@@ -1,6 +1,6 @@
+ BR2_arm=y
+ BR2_cortex_a8=y
+-BR2_GLOBAL_PATCH_DIR="board/beaglebone/patches"
++BR2_GLOBAL_PATCH_DIR="../base_external/patches"
+ BR2_PACKAGE_HOST_LINUX_HEADERS_CUSTOM_4_19=y
+ BR2_ROOTFS_POST_BUILD_SCRIPT="board/beaglebone/post-build.sh"
+ BR2_ROOTFS_POST_IMAGE_SCRIPT="support/scripts/genimage.sh"
+@@ -32,3 +32,4 @@ BR2_PACKAGE_HOST_GENIMAGE=y
+ BR2_PACKAGE_HOST_MTOOLS=y
+ BR2_PACKAGE_HOST_UBOOT_TOOLS=y
+ BR2_PACKAGE_HOST_UBOOT_TOOLS_FIT_SUPPORT=y
++BR2_PACKAGE_AESD_ASSIGNMENTS=y
+diff --git a/final_buildroot/base_external/patches/linux/i2c.patch b/final_buildroot/base_external/patches/linux/i2c.patch
+new file mode 100644
+index 00000000..6c88d298
+--- /dev/null
++++ b/final_buildroot/base_external/patches/linux/i2c.patch
+@@ -0,0 +1,44 @@
++--- /home/dazong/Desktop/final-project-dazong-chen/final_buildroot/buildroot/output/build/linux-custom/arch/arm/boot/dts/am335x-bone-common.dtsi	2019-11-04 11:36:08.000000000 -0700
+++++ /home/dazong/Desktop/final-project-dazong-chen/am335x-bone-common.dtsi	2021-11-14 10:11:36.954383601 -0700
++@@ -79,12 +79,19 @@
++ 		>;
++ 	};
++ 
++-//	i2c2_pins: pinmux_i2c2_pins {
++-//		pinctrl-single,pins = <
++-//			AM33XX_IOPAD(0x978, PIN_INPUT_PULLUP | MUX_MODE3)	/* uart1_ctsn.i2c2_sda */
++-//			AM33XX_IOPAD(0x97c, PIN_INPUT_PULLUP | MUX_MODE3)	/* uart1_rtsn.i2c2_scl */
++-//		>;
++-//	};
+++	i2c1_pins: pinmux_i2c1_pins {
+++		pinctrl-single,pins = <
+++			AM33XX_IOPAD(0x958, PIN_INPUT_PULLUP | MUX_MODE2)       /* spi0_d1.i2c1_sda */
+++			AM33XX_IOPAD(0x95c, PIN_INPUT_PULLUP | MUX_MODE2)       /* spi0_cs0.i2c1_scl */
+++		>;
+++	};
+++
+++	i2c2_pins: pinmux_i2c2_pins {
+++		pinctrl-single,pins = <
+++			AM33XX_IOPAD(0x978, PIN_INPUT_PULLUP | MUX_MODE3)	/* uart1_ctsn.i2c2_sda */
+++			AM33XX_IOPAD(0x97c, PIN_INPUT_PULLUP | MUX_MODE3)	/* uart1_rtsn.i2c2_scl */
+++		>;
+++	};
++ 
++ 	uart0_pins: pinmux_uart0_pins {
++ 		pinctrl-single,pins = <
++@@ -285,6 +292,14 @@
++ 	};
++ };
++ 
+++&i2c1 {
+++	pinctrl-names = "default";
+++	pinctrl-0 = <&i2c1_pins>;
+++
+++	status = "okay";
+++	clock-frequency = <100000>;
+++};
+++
++ &i2c2 {
++ 	pinctrl-names = "default";
++ 	//pinctrl-0 = <&i2c2_pins>;
++
+diff --git a/final_buildroot/base_external/patches/linux/i2c1.patch b/final_buildroot/base_external/patches/linux/i2c1.patch
+deleted file mode 100644
+index 1ffd41d6..00000000
+--- a/final_buildroot/base_external/patches/linux/i2c1.patch
++++ /dev/null
+@@ -1,27 +0,0 @@
+-From 3e53602b4159a3f1f2eff8fd9b1913a38d3868c6 Mon Sep 17 00:00:00 2001
+-From: Akshita Bhasin <akshita.bhasin@colorado.edu>
+-Modified: Dazong Chen <dazong.chen@colorado.edu>
+-Date: Fri, 17 April 2020 10:36:08 -0700
+-Subject: [PATCH] enable-i2c1: enable and configure i2c-1
+----
+- arch/arm/boot/dts/am335x-bone.dtsi | 15 +++++++++++++++++
+- 1 file changed, 6 insertions(+)
+-diff --git a/arch/arm/boot/dts/am335x-bone-common.dtsi b/arch/arm/boot/dts/am335x-bone-common.dtsi
+-index 9abc1f3&i2c2 {
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&i2c2_pins>;..d3ec5c3 100644
+---- a/arch/arm/boot/dts/am335x-bone-common.dtsi
+-+++ b/arch/arm/boot/dts/am335x-bone-common.dtsi
+-@@ -79,4 +79,10 @@
+- 		>;
+- 	};
+-
+-+	i2c1_pins: pinmux_i2c1_pins {
+-+		pinctrl-single,pins = <
+-+			AM33XX_IOPAD(0x958, PIN_INPUT_PULLUP | MUX_MODE2)       /* spi0_d1.i2c1_sda */
+-+			AM33XX_IOPAD(0x95c, PIN_INPUT_PULLUP | MUX_MODE2)       /* spi0_cs0.i2c1_scl */
+-+		>;
+-+	};
+-
+---
+-
+-- 
+2.25.1
+
