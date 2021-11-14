@@ -5,7 +5,3 @@
 	path = buildroot
 	url = https://git.busybox.net/buildroot/
 	branch = 2021.02.x
-[submodule "final_buildroot/buildroot"]
-	path = final_buildroot/buildroot
-	url = git://git.buildroot.net/buildroot
-	branch = 2021.02.x
