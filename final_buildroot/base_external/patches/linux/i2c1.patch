@@ -11,7 +11,7 @@ index 9abc1f3&i2c2 {
 	pinctrl-0 = <&i2c2_pins>;..d3ec5c3 100644
 --- a/arch/arm/boot/dts/am335x-bone-common.dtsi
 +++ b/arch/arm/boot/dts/am335x-bone-common.dtsi
-@@ -85,5 +85,12 @@
+@@ -79,4 +79,10 @@
  		>;
  	};
 
@@ -21,21 +21,6 @@ index 9abc1f3&i2c2 {
 +			AM33XX_IOPAD(0x95c, PIN_INPUT_PULLUP | MUX_MODE2)       /* spi0_cs0.i2c1_scl */
 +		>;
 +	};
-+
-	i2c2_pins: pinmux_i2c2_pins {
-		pinctrl-single,pins = <
-@@ -294,4 +299,12 @@
 
-+&i2c1 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&i2c1_pins>;
-+
-+	status = "okay";
-+	clock-frequency = <100000>;
-+};
-+
- &i2c2 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&i2c2_pins>;
--- 
-2.17.2
+--
+
