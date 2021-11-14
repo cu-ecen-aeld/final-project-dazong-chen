@@ -1,3 +1,7 @@
 [submodule "assignment-autotest"]
 	path = assignment-autotest
 	url = https://github.com/cu-ecen-5013/assignment-autotest
+[submodule "final_buildroot/buildroot"]
+	path = final_buildroot/buildroot
+	url = git://git.buildroot.net/buildroot
+	branch = 2021.08.x
