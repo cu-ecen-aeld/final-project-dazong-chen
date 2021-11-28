@@ -69,7 +69,7 @@ int main()
 	uint16_t        val = 0;
 	float       temp = 0;
 	val = (data_buf[0] << 8 | data_buf[1] &~ STATUS_BITS);
-	temp = (125*val/65536) - 6;
+	temp = -46.85 + (175.72*val/65536);
 	
 	printf("temperature = %.2f C\n", temp);
 	
