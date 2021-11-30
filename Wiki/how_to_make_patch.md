@@ -18,7 +18,7 @@ b/arch/arm/boot/dts/am335x-bone-common.dtsi
 -> --- a/arch/arm/boot/dts/am335x-bone-common.dtsi  
 +++ b/arch/arm/boot/dts/am335x-bone-common.dtsi
 
-8. Following the steps here
+8. Following the steps here  
 https://github.com/cu-ecen-aeld/buildroot-assignments-base/wiki/Beagle-Bone-Black-Devicetree-Hardware-Support
 9. check if buildroot/output/build/linux-custom/arch/arm/boot/dts/am335x-bone-common.dtsi get modified.
 
