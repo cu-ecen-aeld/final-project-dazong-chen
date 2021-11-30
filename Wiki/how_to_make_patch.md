@@ -22,3 +22,8 @@ b/arch/arm/boot/dts/am335x-bone-common.dtsi
 https://github.com/cu-ecen-aeld/buildroot-assignments-base/wiki/Beagle-Bone-Black-Devicetree-Hardware-Support
 9. check if buildroot/output/build/linux-custom/arch/arm/boot/dts/am335x-bone-common.dtsi get modified.
 
+This patch file is working with buildroot 2021.08.1  
+https://github.com/cu-ecen-aeld/final-project-dazong-chen/blob/master/final_buildroot/base_external/patches/linux/0001-new.patch
+
+![i2c_dev](https://github.com/cu-ecen-aeld/final-project-dazong-chen/blob/master/sprint3/i2c.jpg)
+
