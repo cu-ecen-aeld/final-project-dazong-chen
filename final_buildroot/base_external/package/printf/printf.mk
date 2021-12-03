@@ -5,7 +5,7 @@
 ##############################################################
 
 #TODO: Fill up the contents below in order to reference your printf git contents
-PRINTF_VERSION = 4cbe9e5e1d17dad9324287d38f576b3b136d4dc1
+PRINTF_VERSION = 6c62c155ca3d1891222f861ed8854e16ea7f68f0
 # Note: Be sure to reference the *ssh* repository URL here (not https) to work properly
 # with ssh keys and the automated build/test system.
 # Your site should start with git@github.com:
