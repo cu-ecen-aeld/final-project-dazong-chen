@@ -1,7 +1,9 @@
-/*
-** server.c -- a stream socket server demo
-*/
-
+/***********************************************************
+* File name: server.c
+* Description: temperature sensor reads the temperature value, passes it to server and server sends the value as string to client
+* Name: Dazong Chen
+* Reference: https://beej.us/guide/bgnet/html/#socketman
+***********************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

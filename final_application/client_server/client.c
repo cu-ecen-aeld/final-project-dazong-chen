@@ -1,6 +1,9 @@
-/*
-** client.c -- a stream socket client demo
-*/
+/***********************************************************
+* File name: client.c
+* Description: client receives the string that server sends and changes PWM value accordingly
+* Name: Chris Choi
+* Reference: https://beej.us/guide/bgnet/html/#socketman
+***********************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
