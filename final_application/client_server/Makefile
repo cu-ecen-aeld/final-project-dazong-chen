@@ -12,11 +12,11 @@ endif
 all: client server
 default: client server
 
-client : client.c
+client: client.c
 	$(CROSS_COMPILE)$(CC) $(CFLAGS) client.c -o client
 
-server : server.c
+server: server.c
 	$(CROSS_COMPILE)$(CC) $(CFLAGS) server.c -o server
 
-clean :
+clean:
 	rm -f client server *.o
