@@ -8,6 +8,8 @@ ifeq ($(CFLAGS),)
 	CFLAGS= -g -Wall -Werror
 endif
 
+#HFILES= htu21d_sensor/htu21d_sensor.h
+
 all: client server
 default: client server
 
@@ -17,11 +19,11 @@ client : client.o
 server : server.o
 	$(CROSS_COMPILE)$(CC) $(CFLAGS) -o server server.o
 
-client.o: client.c
-	$(CROSS_COMPILE)$(CC) $(CFLAGS) -c client.c
+client.o: client_server/client.c
+	$(CROSS_COMPILE)$(CC) $(CFLAGS) -c client_server/client.c
 
-server.o: server.c
-	$(CROSS_COMPILE)$(CC) $(CFLAGS) -c server.c
+server.o: client_server/server.c
+	$(CROSS_COMPILE)$(CC) $(CFLAGS) -c htu21d_sensor/htu21d_sensor.c client_server/server.c
 
 clean :
 	rm -f client server *.o

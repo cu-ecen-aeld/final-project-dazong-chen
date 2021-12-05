@@ -18,8 +18,10 @@
 #include <arpa/inet.h>
 
 #define PORT "3490" // the port client will be connecting to 
-
-#define MAXDATASIZE 100 // max number of bytes we can get at once 
+#define MAXDATASIZE 100 // max number of bytes we can get at once
+#define		RECV_FAIL 	-2
+#define		OVER_FLOW	-3
+#define		RECV_SUCCESS	0
 
 // get sockaddr, IPv4 or IPv6:
 void *get_in_addr(struct sockaddr *sa)
@@ -33,7 +35,7 @@ void *get_in_addr(struct sockaddr *sa)
 
 int main(int argc, char *argv[])
 {
-	int sockfd, numbytes;  
+	int sockfd;  
 	char buf[MAXDATASIZE];
 	struct addrinfo hints, *servinfo, *p;
 	int rv;
@@ -81,15 +83,53 @@ int main(int argc, char *argv[])
 
 	freeaddrinfo(servinfo); // all done with this structure
 
-	if ((numbytes = recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1) {
-	    perror("recv");
-	    exit(1);
+	char* ptr = NULL;
+	int rc = 0;
+	
+	while(1)
+	{
+		ptr = buf;
+		
+		while(1)
+		{	
+			
+			if ((recv(sockfd, ptr, 1, 0)) == -1) 
+			{
+		    		perror("recv");
+		    		close(sockfd);
+		    		exit(-1);
+		    		rc = RECV_FAIL;
+			}
+			
+			
+			if(*ptr == '\0')
+			{
+				// end of string
+				rc = RECV_SUCCESS;
+				break;	
+			}
+			
+			else if( (ptr - buf) >= (MAXDATASIZE-1) )
+			{
+				// buf size exceeded
+				printf("buf size exceeded\n");
+				rc = OVER_FLOW;
+				break;
+			}
+			
+			else
+			{
+				ptr++;
+			}
+		}
+		
+		if(rc == RECV_SUCCESS)
+		{
+			printf("client: received '%s'\n",buf);
+		}
+		
 	}
-
-	buf[numbytes] = '\0';
-
-	printf("client: received '%s'\n",buf);
-
+	
 	close(sockfd);
 
 	return 0;

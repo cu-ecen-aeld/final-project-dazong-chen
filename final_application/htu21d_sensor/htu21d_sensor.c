@@ -1,12 +1,12 @@
 /********************************************************
-* File Name: main.c
-* Description: application entry point
+* File Name: htu21d_sensor.c
+* Description: Set of functions for HTU21D Temperature & Humidity Sensor
 * Author: Dazong Chen
 * Date: 2021.11.24
-* Reference: https://www.kernel.org/doc/Documentation/i2c/dev-interface
+* Reference: 
+* https://www.kernel.org/doc/Documentation/i2c/dev-interface
+* https://cdn-shop.adafruit.com/datasheets/1899_HTU21D.pdf
 ********************************************************/
-
-
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -18,17 +18,18 @@
 #include <syslog.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include "htu21d_sensor.h"
 
 
-#define 	GESTURE_SENSOR_ADDR 			0x39
 #define 	TEMP_SENSOR_ADDR			0x40
 #define		I2C_DEVICE_FILE          		"/dev/i2c-2"
 #define		TEMPERATURE_MEASUREMENT_NO_HOLD		0xF3
 #define		STATUS_BITS				0x03     // The two status bits, must be set to 0 before calculating physical values
+#define		TEMP_DATA_BYTES				2
 
 
 
-int main()
+float read_temperature()
 {
 	int file = open(I2C_DEVICE_FILE, O_RDWR);
 	int i2c_addr = 0;
@@ -54,10 +55,10 @@ int main()
 	
 	write(file, buf, 1);
 	
-	sleep(1);
+	usleep(60000);	// measurement time
 	
-	char data_buf[2] = {0};
-	int rc = read(file, data_buf, 2);
+	char data_buf[TEMP_DATA_BYTES] = {0};
+	int rc = read(file, data_buf, TEMP_DATA_BYTES);
 	
 	if( rc != 2)
 	{
@@ -66,12 +67,11 @@ int main()
 	}
 	
 	// calculate temperature value
-	uint16_t        val = 0;
-	float       temp = 0;
-	val = (data_buf[0] << 8 | data_buf[1] &~ STATUS_BITS);
+	uint16_t	val = 0;
+	float		temp = 0;
+	
+	val = ( (data_buf[0] << 8 | data_buf[1]) &~ STATUS_BITS);
 	temp = -46.85 + (175.72*val/65536);
 	
-	printf("temperature = %.2f C\n", temp);
-	
-	return 0;
+	return 	temp;
 }

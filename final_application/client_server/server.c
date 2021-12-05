@@ -16,10 +16,12 @@
 #include <arpa/inet.h>
 #include <sys/wait.h>
 #include <signal.h>
+#include "../htu21d_sensor/htu21d_sensor.h"
 
-#define PORT "3490"  // the port users will be connecting to
-
-#define BACKLOG 10	 // how many pending connections queue will hold
+#define		PORT			"3490"  	// the port users will be connecting to
+#define 	BACKLOG 		10	 	// how many pending connections queue will hold
+#define		MAX_DATA_BYTES		100
+//#define		MAX_TEMP_DATA_BYTES	10
 
 void sigchld_handler(int s)
 {
@@ -110,10 +112,16 @@ int main(void)
 
 	printf("server: waiting for connections...\n");
 
-	while(1) {  // main accept() loop
+	float 		temp = 0;	// temparature data
+	char 		data_buf[MAX_DATA_BYTES];	// the string that server sends to client
+	//char		temp_data_buf[MAX_TEMP_DATA_BYTES];	// string that contains the value of temperature
+	
+	while(1) 
+	{  	// main accept() loop
 		sin_size = sizeof their_addr;
 		new_fd = accept(sockfd, (struct sockaddr *)&their_addr, &sin_size);
-		if (new_fd == -1) {
+		if (new_fd == -1) 
+		{
 			perror("accept");
 			continue;
 		}
@@ -122,15 +130,49 @@ int main(void)
 			get_in_addr((struct sockaddr *)&their_addr),
 			s, sizeof s);
 		printf("server: got connection from %s\n", s);
-
+		
+		while(1)
+		{
+			memset(data_buf, 0, MAX_DATA_BYTES);
+			
+			
+			strcpy(data_buf, "server send: ");
+			
+			temp = read_temperature();
+			
+			sprintf(data_buf, "server send: %.2f C", temp);
+			printf("%s", data_buf);
+			
+			int total_bytes = strlen(data_buf)+1;
+			int bytes_sent = 0;
+			
+			do
+			{
+				bytes_sent = send(new_fd, data_buf, total_bytes, 0);
+				if (bytes_sent == -1)
+				{
+					perror("send");
+					close(new_fd);
+					exit(-1);
+				}
+				
+				total_bytes -= bytes_sent;
+				
+			}while(total_bytes != 0);
+			sleep(2);
+		}
+		
+		
+		/*
 		if (!fork()) { // this is the child process
 			close(sockfd); // child doesn't need the listener
-			if (send(new_fd, "Hello, world!", 13, 0) == -1)
+			
 				perror("send");
 			close(new_fd);
 			exit(0);
 		}
 		close(new_fd);  // parent doesn't need this
+		*/
 	}
 
 	return 0;
