@@ -5,7 +5,7 @@
 ##############################################################
 
 #TODO: Fill up the contents below in order to reference your printf git contents
-FINAL_PROJECT_VERSION = 87ca64c31d1d3feb889a26d0c61380a793714b2d
+FINAL_PROJECT_VERSION = 2655a2be3b16b4efc9aafc5954bc07d2f5388ce4
 # Note: Be sure to reference the *ssh* repository URL here (not https) to work properly
 # with ssh keys and the automated build/test system.
 # Your site should start with git@github.com:
@@ -14,7 +14,12 @@ FINAL_PROJECT_SITE_METHOD = git
 FINAL_PROJECT_GIT_SUBMODULES = YES
 
 define FINAL_PROJECT_BUILD_CMDS
-	$(MAKE) $(TARGET_CONFIGURE_OPTS) -C $(@D)/final_application all
+	$(MAKE) $(TARGET_CONFIGURE_OPTS) -C $(@D)/final_application/client all
+	$(MAKE) $(TARGET_CONFIGURE_OPTS) -C $(@D)/final_application/client/obj all
+	$(MAKE) $(TARGET_CONFIGURE_OPTS) -C $(@D)/final_application/server all
+	$(MAKE) $(TARGET_CONFIGURE_OPTS) -C $(@D)/final_application/server/obj all
+	$(MAKE) $(TARGET_CONFIGURE_OPTS) -C $(@D)/final_application/htu21d_sensor all
+	$(MAKE) $(TARGET_CONFIGURE_OPTS) -C $(@D)/final_application/htu21d_sensor/obj all
 endef
 
 define FINAL_PROJECT_INSTALL_TARGET_CMDS
