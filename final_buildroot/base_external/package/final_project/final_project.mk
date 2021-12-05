@@ -14,8 +14,9 @@ FINAL_PROJECT_SITE_METHOD = git
 FINAL_PROJECT_GIT_SUBMODULES = YES
 
 define FINAL_PROJECT_BUILD_CMDS
-	$(MAKE) $(TARGET_CONFIGURE_OPTS) -C $(@D)/final_application/htu21d_sensor all
-	$(MAKE) $(TARGET_CONFIGURE_OPTS) -C $(@D)/final_application/client_server all
+	#$(MAKE) $(TARGET_CONFIGURE_OPTS) -C $(@D)/final_application/htu21d_sensor all
+	#$(MAKE) $(TARGET_CONFIGURE_OPTS) -C $(@D)/final_application/client_server all
+	$(MAKE) $(TARGET_CONFIGURE_OPTS) -C $(@D)/final_application all
 endef
 
 define FINAL_PROJECT_INSTALL_TARGET_CMDS
