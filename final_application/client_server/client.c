@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
 
 	char* ptr = NULL;
 	int rc = 0;
-	
+	double temp;
 	while(1)
 	{
 		ptr = buf;
@@ -126,6 +126,8 @@ int main(int argc, char *argv[])
 		if(rc == RECV_SUCCESS)
 		{
 			printf("client: received '%s'\n",buf);
+			temp = atof(buf);
+			printf("temperature is %.2f\n", temp);
 		}
 		
 	}
