@@ -125,7 +125,6 @@ int main(int argc, char *argv[])
 		
 		if(rc == RECV_SUCCESS)
 		{
-			printf("temperature is %s\n",buf);
 			temp = atof(buf);
 			printf("temperature is %.2f\n", temp);
 		}
