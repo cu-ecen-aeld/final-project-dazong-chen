@@ -147,13 +147,10 @@ int main(void)
 		while(1)
 		{
 			memset(data_buf, 0, MAX_DATA_BYTES);
-			
-			
-			strcpy(data_buf, "server send: ");
-			
+
 			temp = read_temperature();
 			
-			sprintf(data_buf, "server send: %.2f C", temp);
+			sprintf(data_buf, "%.2f", temp);
 			printf("%s", data_buf);
 			
 			int total_bytes = strlen(data_buf)+1;
