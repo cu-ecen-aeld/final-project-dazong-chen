@@ -45,6 +45,12 @@ int main(int argc, char *argv[])
 	    fprintf(stderr,"usage: client hostname\n");
 	    exit(1);
 	}
+	
+	system("cd /sys/class/pwm/pwmchip0; echo 0 > export");
+        sleep(2);
+        system("cd /sys/class/pwm/pwmchip0/pwm0; echo 100 > period");
+        system("cd /sys/class/pwm/pwmchip0/pwm0; echo 0 > duty_cycle");
+        system("cd /sys/class/pwm/pwmchip0/pwm0; echo 1 > enable");
 
 	memset(&hints, 0, sizeof hints);
 	hints.ai_family = AF_UNSPEC;
@@ -128,6 +134,39 @@ int main(int argc, char *argv[])
 		{	
 			temp = atof(buf);
 			printf("temperature is %.2f C\n",temp);
+			
+			if(temp > 23.0)
+			{
+				system("cd /sys/class/pwm/pwmchip0/pwm0; echo 10 > duty_cycle");
+			}
+			else if(temp >= 23.5 && temp < 24.0)
+			{
+				system("cd /sys/class/pwm/pwmchip0/pwm0; echo 20 > duty_cycle");
+			}
+			else if(temp >= 24.0 && temp < 24.5)
+			{
+				system("cd /sys/class/pwm/pwmchip0/pwm0; echo 30 > duty_cycle");
+			}
+			else if(temp >= 24.5 && temp < 25.0)
+			{
+				system("cd /sys/class/pwm/pwmchip0/pwm0; echo 40 > duty_cycle");
+			}
+			else if(temp >= 25.0 && temp < 25.5)
+			{
+				system("cd /sys/class/pwm/pwmchip0/pwm0; echo 50 > duty_cycle");
+			}
+			else if(temp >= 25.0 && temp < 25.5)
+			{
+				system("cd /sys/class/pwm/pwmchip0/pwm0; echo 50 > duty_cycle");
+			}
+			else if(temp >= 25.5 && temp < 26.0)
+			{
+				system("cd /sys/class/pwm/pwmchip0/pwm0; echo 60 > duty_cycle");
+			}
+			else if (temp >= 26.0)
+			{
+				system("cd /sys/class/pwm/pwmchip0/pwm0; echo 100 > duty_cycle");
+			}
 		}
 		
 	}
