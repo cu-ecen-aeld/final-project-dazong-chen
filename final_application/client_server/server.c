@@ -147,11 +147,13 @@ int main(void)
 		while(1)
 		{
 			memset(data_buf, 0, MAX_DATA_BYTES);
-
+			
+			
+			strcpy(data_buf, "server send: ");
+			
 			temp = read_temperature();
 			
 			sprintf(data_buf, "%.2f", temp);
-			printf("%s", data_buf);
 			
 			int total_bytes = strlen(data_buf)+1;
 			int bytes_sent = 0;
@@ -171,18 +173,6 @@ int main(void)
 			}while(total_bytes != 0);
 			sleep(2);
 		}
-		
-		
-		/*
-		if (!fork()) { // this is the child process
-			close(sockfd); // child doesn't need the listener
-			
-				perror("send");
-			close(new_fd);
-			exit(0);
-		}
-		close(new_fd);  // parent doesn't need this
-		*/
 	}
 
 	return 0;
