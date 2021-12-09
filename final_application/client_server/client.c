@@ -87,12 +87,6 @@ int main(int argc, char *argv[])
 	int rc = 0;
 	double temp;	// temperature value
 	
-	system("cd /sys/class/pwm/pwmchip0; echo 0 > export");
-        sleep(2);
-        system("cd /sys/class/pwm/pwmchip0/pwm0; echo 100 > period");
-        system("cd /sys/class/pwm/pwmchip0/pwm0; echo 100 > duty_cycle");
-        system("cd /sys/class/pwm/pwmchip0/pwm0; echo 1 > enable");
-	
 	while(1)
 	{
 		ptr = buf;
