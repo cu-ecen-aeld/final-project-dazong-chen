@@ -134,10 +134,13 @@ int main(int argc, char *argv[])
 		{	
 			temp = atof(buf);
 			//printf("temperature is %.2f C\n",temp);
-			
-			if(temp > 23.0)
+			if(temp < 2.0)
 			{
-				system("cd /sys/class/pwm/pwmchip0/pwm0; echo 100 > duty_cycle");
+				system("cd /sys/class/pwm/pwmchip0/pwm0; echo 0 > duty_cycle");
+			}
+			else if(temp > 2.0 && temp <= 23.5)
+			{
+				system("cd /sys/class/pwm/pwmchip0/pwm0; echo 10 > duty_cycle");
 			}
 			else if(temp >= 23.5 && temp < 24.0)
 			{
