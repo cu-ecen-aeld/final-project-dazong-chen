@@ -149,7 +149,7 @@ int main(void)
 			memset(data_buf, 0, MAX_DATA_BYTES);
 			
 			
-			strcpy(data_buf, "server send: ");
+			//strcpy(data_buf, "server send: ");
 			
 			temp = read_temperature();
 			
