@@ -85,8 +85,7 @@ int main(int argc, char *argv[])
 
 	char* ptr = NULL;
 	int rc = 0;
-	double temp;	// temperature value
-	
+	double temp;
 	while(1)
 	{
 		ptr = buf;
@@ -125,9 +124,9 @@ int main(int argc, char *argv[])
 		}
 		
 		if(rc == RECV_SUCCESS)
-		{	
+		{
 			temp = atof(buf);
-			printf("temperature is %.2f C\n",temp);
+			printf("temperature is %.2f\n", temp);
 		}
 		
 	}
