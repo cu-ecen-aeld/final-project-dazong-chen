@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
 	system("cd /sys/class/pwm/pwmchip0; echo 0 > export");
         sleep(2);
         system("cd /sys/class/pwm/pwmchip0/pwm0; echo 100 > period");
-        system("cd /sys/class/pwm/pwmchip0/pwm0; echo 0 > duty_cycle");
+        system("cd /sys/class/pwm/pwmchip0/pwm0; echo 10 > duty_cycle");
         system("cd /sys/class/pwm/pwmchip0/pwm0; echo 1 > enable");
 	
 	while(1)
@@ -137,9 +137,9 @@ int main(int argc, char *argv[])
 			
 			if(temp > 23.0)
 			{
-				system("cd /sys/class/pwm/pwmchip0/pwm0; echo 10 > duty_cycle");
+				system("cd /sys/class/pwm/pwmchip0/pwm0; echo 100 > duty_cycle");
 			}
-			else if(temp >= 23.5 && temp < 24.0)
+			/*else if(temp >= 23.5 && temp < 24.0)
 			{
 				system("cd /sys/class/pwm/pwmchip0/pwm0; echo 20 > duty_cycle");
 			}
@@ -167,6 +167,7 @@ int main(int argc, char *argv[])
 			{
 				system("cd /sys/class/pwm/pwmchip0/pwm0; echo 100 > duty_cycle");
 			}
+			*/
 		}
 		
 	}
