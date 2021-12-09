@@ -45,12 +45,6 @@ int main(int argc, char *argv[])
 	    fprintf(stderr,"usage: client hostname\n");
 	    exit(1);
 	}
-	
-	system("cd /sys/class/pwm/pwmchip0; echo 0 > export");
-        sleep(2);
-        system("cd /sys/class/pwm/pwmchip0/pwm0; echo 100 > period");
-        system("cd /sys/class/pwm/pwmchip0/pwm0; echo 0 > duty_cycle");
-        system("cd /sys/class/pwm/pwmchip0/pwm0; echo 1 > enable");
 
 	memset(&hints, 0, sizeof hints);
 	hints.ai_family = AF_UNSPEC;
@@ -92,6 +86,12 @@ int main(int argc, char *argv[])
 	char* ptr = NULL;
 	int rc = 0;
 	double temp;	// temperature value
+	
+	system("cd /sys/class/pwm/pwmchip0; echo 0 > export");
+        sleep(2);
+        system("cd /sys/class/pwm/pwmchip0/pwm0; echo 100 > period");
+        system("cd /sys/class/pwm/pwmchip0/pwm0; echo 0 > duty_cycle");
+        system("cd /sys/class/pwm/pwmchip0/pwm0; echo 1 > enable");
 	
 	while(1)
 	{
