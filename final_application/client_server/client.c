@@ -133,13 +133,13 @@ int main(int argc, char *argv[])
 		if(rc == RECV_SUCCESS)
 		{	
 			temp = atof(buf);
-			printf("temperature is %.2f C\n",temp);
+			//printf("temperature is %.2f C\n",temp);
 			
 			if(temp > 23.0)
 			{
 				system("cd /sys/class/pwm/pwmchip0/pwm0; echo 100 > duty_cycle");
 			}
-			/*else if(temp >= 23.5 && temp < 24.0)
+			else if(temp >= 23.5 && temp < 24.0)
 			{
 				system("cd /sys/class/pwm/pwmchip0/pwm0; echo 20 > duty_cycle");
 			}
@@ -167,7 +167,7 @@ int main(int argc, char *argv[])
 			{
 				system("cd /sys/class/pwm/pwmchip0/pwm0; echo 100 > duty_cycle");
 			}
-			*/
+			
 		}
 		
 	}
